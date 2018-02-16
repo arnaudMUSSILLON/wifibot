@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include <QApplication>
+#include "wifibot.h"
 
 int main(int argc, char *argv[])
 {
@@ -7,7 +8,7 @@ int main(int argc, char *argv[])
     MainWindow w;
     w.show();
 
-    Wifibot *w = new Wifibot();
+    Wifibot *wb = new Wifibot();
 
     return a.exec();
 }
