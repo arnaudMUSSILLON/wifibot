@@ -26,7 +26,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    Controler c;
+    Controler* c;
 };
 
 #endif // MAINWINDOW_H

@@ -2,23 +2,31 @@
 
 Controler::Controler(QObject *parent) : QObject(parent)
 {
-    socket = new QTcpSocket();
     buffer = new QByteArray();
 }
 
-bool Controler::connect(QString address, int port){
+/**
+ * @brief Controler::connect
+ * Connection to the robot (require an address and a port)
+ * @param address
+ * @param port
+ * @return
+ */
+bool Controler::askConnection(QString address, int port){
     bool res = false;
-    QObject::connect(socket, SIGNAL(read()),this, SLOT(read()));    //Creates a connection of the given type from the signal in the sender object
-    QHostAddress a = QHostAddress(address);   //transform the string into IPV4 address
-    socket->connectToHost(a, port);     //connexion to remote host
+
+    //Create new socket
+    socket = new QTcpSocket();
+    connect(socket, SIGNAL(read()),this, SLOT(read()));    //Creates a connection of the given type from the signal in the sender object
+    connect(socket, SIGNAL(write()),this, SLOT(write()));
+    //QHostAddress a = QHostAddress(address);   //transform the string into IPV4 address
+    socket->connectToHost(address, port);     //connexion to remote host
     if(socket->waitForConnected(5000)){     //waiting 1 second for a response
             res = true;
-            qDebug("Connexion : OK");
     }
     else{
         qDebug("Erreur : la connexion a échoué");
     }
-
     return res;
 }
 
@@ -33,12 +41,16 @@ void Controler::disconnect(){
 }
 
 
+void Controler::write(){
+    qDebug() << socket->write("Demande de connexion");      //Read all data from the socket
+}
+
 /**
  * @brief Controler::read
  * Reading of the data send by the robot after the connection
  */
 void Controler::read(){
-    qDebug() << "Connection successful";
+    qDebug() << "Lecture des données en cours";
     qDebug() << socket->readAll();      //Read all data from the socket
 }
 

@@ -11,6 +11,7 @@ MainWindow::MainWindow(QWidget *parent) :
     this->ui->downArrowBtn->setArrowType(Qt::DownArrow);
     this->ui->rightArrowBtn->setArrowType(Qt::RightArrow);
     this->ui->leftArrowBtn->setArrowType(Qt::LeftArrow);
+    this->c= new Controler();
 }
 
 MainWindow::~MainWindow()
@@ -28,12 +29,10 @@ void MainWindow::on_connectBtn_clicked()
         QMessageBox::warning(this, "Connexion","Veuillez remplir les champs Adresse et Port",QMessageBox::Ok);
     }
     else{
-        QMessageBox::information(this,"Connexion","Connexion en cours",QMessageBox::Ok);
-
         //appel de la méthode connect
         QString ip = this->ui->tfAddress->text();
         int port = this->ui->tfPort->text().toInt();
-        c.connect(ip,port);
+        c->askConnection(ip,port);
     }
 }
 
@@ -43,7 +42,7 @@ void MainWindow::on_connectBtn_clicked()
  */
 void MainWindow::on_disconnectBtn_clicked()
 {
-    //c.disconnect();
+    c->disconnect();
 }
 
 void::MainWindow::keyPressEvent(QKeyEvent *event){
