@@ -1,6 +1,7 @@
 #ifndef CONTROLER_H
 #define CONTROLER_H
 
+//#include "controler.moc"
 #include <QtNetwork>
 #include <QObject>
 #include <QTcpSocket>

@@ -16,13 +16,13 @@ bool Controler::askConnection(QString address, int port){
     bool res = false;
 
     //Create new socket
-    socket = new QTcpSocket();
-    connect(socket, SIGNAL(read()),this, SLOT(read()));    //Creates a connection of the given type from the signal in the sender object
-    connect(socket, SIGNAL(write()),this, SLOT(write()));
+    socket = new QTcpSocket(this);
+    connect(socket, SIGNAL(connected()),this, SLOT(read()));    //Creates a connection of the given type from the signal in the sender object
+    connect(socket, SIGNAL(disconnected()),this, SLOT(write()));
     //QHostAddress a = QHostAddress(address);   //transform the string into IPV4 address
     socket->connectToHost(address, port);     //connexion to remote host
     if(socket->waitForConnected(5000)){     //waiting 1 second for a response
-            res = true;
+        res = true;
     }
     else{
         qDebug("Erreur : la connexion a échoué");

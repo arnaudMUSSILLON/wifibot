@@ -21,7 +21,6 @@ public:
 
 private slots:
     void on_connectBtn_clicked();
-
     void on_disconnectBtn_clicked();
 
 private:
