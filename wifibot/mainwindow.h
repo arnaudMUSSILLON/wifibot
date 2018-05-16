@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QMessageBox>
 #include <QKeyEvent>
+#include <QWebEngineView>
 #include "controler.h"
 
 namespace Ui {

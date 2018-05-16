@@ -33,6 +33,11 @@ void MainWindow::on_connectBtn_clicked()
         QString ip = this->ui->tfAddress->text();
         int port = this->ui->tfPort->text().toInt();
         c->askConnection(ip,port);
+        QString source = "http://"+ui->tfAddress->text()+":8080/javascript_simple.html";
+        ui->videoFrame->load(QUrl(source));
+        ui->videoFrame->setZoomFactor(1.4);
+        ui->videoFrame->setStyleSheet("background-color:#ffffff;");
+        ui->videoFrame->show();
     }
 }
 
@@ -43,6 +48,7 @@ void MainWindow::on_connectBtn_clicked()
 void MainWindow::on_disconnectBtn_clicked()
 {
     c->disconnect();
+    ui->videoFrame->stop();
 }
 
 void::MainWindow::keyPressEvent(QKeyEvent *event){
