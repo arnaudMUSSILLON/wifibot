@@ -52,12 +52,25 @@ void MainWindow::on_disconnectBtn_clicked()
     ui->videoFrame->stop();
 }
 
+
+void MainWindow::updateMove(){
+    int vitesse = 100;
+    if(isPressedZ && !isPressedQ && !isPressedS && !isPressedD){
+        c->move(vitesse, vitesse, 1);
+        qDebug() << "z";
+    }
+    else{
+        c->move(0,0,1);
+    }
+}
+
+
 void::MainWindow::keyPressEvent(QKeyEvent *event){
     switch(event->key()){
-
     case Qt::Key_Z:
         ui->zBtn->animateClick();
         ui->zBtn->click();
+        isPressedZ = true;
         break;
 
     case Qt::Key_S:
@@ -97,6 +110,7 @@ void::MainWindow::keyPressEvent(QKeyEvent *event){
         ui->rightArrowBtn->click();
         break;
     }
+    updateMove();
 }
 
 void MainWindow::on_upArrowBtn_pressed()
