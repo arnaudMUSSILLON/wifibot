@@ -12,6 +12,7 @@ MainWindow::MainWindow(QWidget *parent) :
     this->ui->rightArrowBtn->setArrowType(Qt::RightArrow);
     this->ui->leftArrowBtn->setArrowType(Qt::LeftArrow);
     this->c= new Controler();
+    this->cameraControler = new QNetworkAccessManager();
 }
 
 MainWindow::~MainWindow()
@@ -96,4 +97,29 @@ void::MainWindow::keyPressEvent(QKeyEvent *event){
         ui->rightArrowBtn->click();
         break;
     }
+}
+
+void MainWindow::on_upArrowBtn_pressed()
+{
+    QUrl url("http://"+ui->tfAddress->text()+":8080"+CAM_UP);
+    cameraControler->get(QNetworkRequest(url));
+
+}
+
+void MainWindow::on_downArrowBtn_pressed()
+{
+    QUrl url("http://"+ui->tfAddress->text()+":8080"+CAM_DOWN);
+    cameraControler->get(QNetworkRequest(url));
+}
+
+void MainWindow::on_leftArrowBtn_pressed()
+{
+    QUrl url("http://"+ui->tfAddress->text()+":8080"+CAM_LEFT);
+    cameraControler->get(QNetworkRequest(url));
+}
+
+void MainWindow::on_rightArrowBtn_pressed()
+{
+    QUrl url("http://"+ui->tfAddress->text()+":8080"+CAM_RIGHT);
+    cameraControler->get(QNetworkRequest(url));
 }
