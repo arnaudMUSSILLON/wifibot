@@ -38,9 +38,14 @@ private slots:
 
     void on_rightArrowBtn_pressed();
 
+    void screenshot();
+
+    void on_captureBtn_clicked();
+
 private:
     Ui::MainWindow *ui;
     Controler* c;
+
 };
 
 #endif // MAINWINDOW_H

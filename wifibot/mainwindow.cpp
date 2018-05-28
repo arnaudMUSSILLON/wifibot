@@ -123,3 +123,24 @@ void MainWindow::on_rightArrowBtn_pressed()
     QUrl url("http://"+ui->tfAddress->text()+":8080"+CAM_RIGHT);
     cameraControler->get(QNetworkRequest(url));
 }
+
+void MainWindow::screenshot(){
+
+    int left, top, width, height;
+    left = 0;
+    top = 0;
+    width = 600;
+    height = 800;
+
+    QImage image(height, width, QImage::Format_RGB32);
+    QRegion rg(left, top, width, height);
+    QPainter painter(&image);
+    ui->videoFrame->page()->view()->render(&painter, QPoint(), rg);
+    painter.end();
+    image.save("~/Desktop/test.png", "PNG", 80);
+}
+
+void MainWindow::on_captureBtn_clicked()
+{
+    screenshot();
+}
