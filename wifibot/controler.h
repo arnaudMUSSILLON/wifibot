@@ -2,6 +2,7 @@
 #define CONTROLER_H
 
 //#include "controler.moc"
+#include <QTimer>
 #include <QtNetwork>
 #include <QObject>
 #include <QTcpSocket>
@@ -16,6 +17,7 @@ public:
     explicit Controler(QObject *parent = 0);
     bool askConnection(QString address, int port);
     void disconnect();
+    void move(int vitesseG, int vitesseD, int direction);
     short Crc16(unsigned char *Adresse_tab , unsigned char Taille_max);
     struct Capteur{
         quint16 speedL;     //speed left wheels
@@ -30,11 +32,14 @@ public:
 
 public slots:
     void read();
+    void sendData();
+    void whenBytesWritten(qint64 bytes);
 
 private:
     QTcpSocket *socket;
     QByteArray* buffer;
     Capteur capteur;
+    QTimer* timer;
 };
 
 #endif // CONTROLER_H
