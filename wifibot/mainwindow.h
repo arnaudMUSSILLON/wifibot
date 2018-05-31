@@ -27,6 +27,7 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
     void keyPressEvent(QKeyEvent *event);
+    void keyReleaseEvent(QKeyEvent *event);
     void updateMove();
     QNetworkAccessManager *cameraControler;
     QWebEnginePage page;
@@ -35,17 +36,11 @@ public:
 private slots:
     void on_connectBtn_clicked();
     void on_disconnectBtn_clicked();
-
     void on_upArrowBtn_pressed();
-
     void on_downArrowBtn_pressed();
-
     void on_leftArrowBtn_pressed();
-
     void on_rightArrowBtn_pressed();
-
     void screenshot();
-
     void on_captureBtn_clicked();
 
     void setLbValue(int);
@@ -53,7 +48,6 @@ private slots:
 private:
     Ui::MainWindow *ui;
     Controler* c;
-
     bool isPressedZ = false;
     bool isPressedQ = false;
     bool isPressedS = false;

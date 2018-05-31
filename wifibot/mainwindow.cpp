@@ -81,6 +81,18 @@ void MainWindow::on_upArrowBtn_pressed()
     QUrl url("http://"+ui->tfAddress->text()+":8080"+CAM_UP);
     cameraControler->get(QNetworkRequest(url));
 
+<<<<<<< HEAD
+=======
+void MainWindow::updateMove(){
+    int vitesse = 240;
+    if(isPressedZ && !isPressedQ && !isPressedS && !isPressedD){
+        c->move(vitesse, vitesse, 1);
+        qDebug() << "z";
+    }
+    else{
+        c->move(vitesse, vitesse, 3);
+    }
+>>>>>>> 9b08c53ff0edcea932a820caad6454d4415fa5b3
 }
 
 /**
@@ -94,6 +106,7 @@ void MainWindow::on_downArrowBtn_pressed()
 }
 
 /**
+<<<<<<< HEAD
  * @brief MainWindow::on_upArrowBtn_pressed
  * Gestion du contrôle de la caméra lors de l'appui sur la flèche gauche
  */
@@ -117,6 +130,10 @@ void MainWindow::on_rightArrowBtn_pressed()
  * @brief ::MainWindow::keyPressEvent
  * @param event
  * assignation des boutons aux touches
+=======
+ * @brief ::MainWindow::keyPressEvent event when a key is pressed
+ * @param event
+>>>>>>> 9b08c53ff0edcea932a820caad6454d4415fa5b3
  */
 void::MainWindow::keyPressEvent(QKeyEvent *event){
     switch(event->key()){
@@ -128,47 +145,71 @@ void::MainWindow::keyPressEvent(QKeyEvent *event){
 
     case Qt::Key_S:
         ui->sBtn->animateClick();
-        ui->sBtn->click();
         break;
 
     case Qt::Key_D:
         ui->dBtn->animateClick();
-        ui->dBtn->click();
         break;
 
     case Qt::Key_Q:
         ui->qBtn->animateClick();
-        ui->qBtn->click();
         break;
 
     case Qt::Key_Up:
         ui->upArrowBtn->animateClick();
-        ui->upArrowBtn->click();
         break;
 
     case Qt::Key_Down:
         ui->downArrowBtn->animateClick();
-        ui->downArrowBtn->click();
         ui->qBtn->click();
         break;
 
     case Qt::Key_Left:
         ui->leftArrowBtn->animateClick();
-        ui->leftArrowBtn->click();
         ui->qBtn->click();
         break;
 
     case Qt::Key_Right:
         ui->rightArrowBtn->animateClick();
-        ui->rightArrowBtn->click();
         break;
     }
     updateMove();
 }
 
+<<<<<<< HEAD
 /* ***********************************
     Gestion du mouvement
 *************************************/
+=======
+
+/**
+ * @brief Event when a key is released
+ * @param event
+ */
+void MainWindow::keyReleaseEvent(QKeyEvent *event){
+    switch(event->key()){
+    case Qt::Key_Z:
+        isPressedZ = false;
+        break;
+    case Qt::Key_Q:
+        isPressedD = false;
+        break;
+    case Qt::Key_S:
+        isPressedS = false;
+        break;
+    case Qt::Key_D:
+        isPressedD = false;
+        break;
+    }
+    updateMove();
+}
+
+
+void MainWindow::on_upArrowBtn_pressed()
+{
+    QUrl url("http://"+ui->tfAddress->text()+":8080"+CAM_UP);
+    cameraControler->get(QNetworkRequest(url));
+>>>>>>> 9b08c53ff0edcea932a820caad6454d4415fa5b3
 
 /**
  * @brief MainWindow::updateMove

@@ -1,7 +1,6 @@
 #ifndef CONTROLER_H
 #define CONTROLER_H
 
-//#include "controler.moc"
 #include <QTimer>
 #include <QtNetwork>
 #include <QObject>
@@ -20,10 +19,10 @@ public:
     void move(int vitesseG, int vitesseD, int direction);
     short Crc16(unsigned char *Adresse_tab , unsigned char Taille_max);
     struct Capteur{
-        quint16 speedL;     //speed left wheels
-        quint16 speedR;     //speed right wheels
-        quint8 battery;
-        quint8 power;
+        quint16 vitesseG;     //speed left wheels
+        quint16 vitesseD;     //speed right wheels
+        quint8 batterie;
+        quint8 courant;
         quint8 c1;
         quint8 c2;
         quint8 c3;
@@ -31,7 +30,8 @@ public:
     };
 
 public slots:
-    void read();
+    void whenConnected();
+    void receiveData();
     void sendData();
     void whenBytesWritten(qint64 bytes);
     QString getBatterie();
@@ -41,7 +41,11 @@ private:
     QByteArray* buffer;
     Capteur capteur;
     QTimer* timer;
+<<<<<<< HEAD
     QTimer* t2;
+=======
+    QTimer* timer2;
+>>>>>>> 9b08c53ff0edcea932a820caad6454d4415fa5b3
 };
 
 #endif // CONTROLER_H
