@@ -3,9 +3,16 @@
 Controler::Controler(QObject *parent) : QObject(parent)
 {
     buffer = new QByteArray();
+
+    //Envoie régulier du buffer pour la gestion du robot
     timer = new QTimer(this);
-    timer->setInterval(50);
+    timer->setInterval(20);
     connect(timer, SIGNAL(timeout()),this,SLOT(sendData()));
+
+    //Timer pour la lecture des informations
+    timer2 = new QTimer(this);
+    timer2->setInterval(250);
+    connect(timer2, SIGNAL(timeout()),this, SLOT(receiveData()));
 }
 
 /**
@@ -20,26 +27,24 @@ bool Controler::askConnection(QString address, int port){
 
     //Create new socket
     socket = new QTcpSocket(this);
-    connect(socket, SIGNAL(connected()),this, SLOT(read()));    //Creates a connection of the given type from the signal in the sender object
+    connect(socket, SIGNAL(connected()),this, SLOT(whenConnected()));    //Creates a connection of the given type from the signal in the sender object
     connect(socket, SIGNAL(bytesWritten(qint64)),this, SLOT(whenBytesWritten(qint64)));
-    //connect(socket, SIGNAL(disconnected()),this, SLOT(write()));
     //QHostAddress a = QHostAddress(address);   //transform the string into IPV4 address
     socket->connectToHost(address, port);     //connexion to remote host
     if(socket->waitForConnected(5000)){     //waiting 1 second for a response
         timer->start();
+        timer2->start();
         res = true;
     }
     else{
         qDebug("Erreur : la connexion a échoué");
     }
-    move(0,0,1);
     return res;
 }
 
 
 void Controler::sendData(){
-    socket->write(*buffer);
-
+    this->socket->write(*this->buffer);
 }
 
 
@@ -50,15 +55,24 @@ void Controler::sendData(){
 void Controler::disconnect(){
     socket->disconnectFromHost();
     qDebug("Deconnexion : OK");
+    timer->stop();
+    timer2->stop();
+}
+
+
+void Controler::whenConnected(){
+    qDebug() << "Connexion réussie";
 }
 
 /**
  * @brief Controler::read
  * Reading of the data send by the robot after the connection
  */
-void Controler::read(){
+void Controler::receiveData(){
     qDebug() << "Lecture des données en cours";
-    //QDataStream Capteur(this->socket);
+    QByteArray data = socket->readAll();
+    capteur.batterie = data[2]*100/122;
+    qDebug() << "Batterie" << capteur.batterie;
 }
 
 /**
@@ -75,14 +89,14 @@ void Controler::move(int vitesseG, int vitesseD, int direction){
     buffer->append((char)0x00);
     buffer->append((char)vitesseD);*/
     this->buffer->clear();
-    this->buffer->append((char)255);        // Char1 (255)
-    this->buffer->append((char)0x07);       // Char2 (0x07)
-    this->buffer->append(vitesseG);  // Char3 leftspeed control
+    this->buffer->append(255);        // Char1 (255)
+    this->buffer->append(0x07);       // Char2 (0x07)
+    this->buffer->append(240);  // Char3 leftspeed control
     this->buffer->append(1);          // Char4 leftspeed control
-    this->buffer->append(vitesseD); // Char5 rightspeed control
+    this->buffer->append(240); // Char5 rightspeed control
     this->buffer->append(1);          // Char6 rightspeed control
-
-    if(direction == 4){
+    this->buffer->append(0b01010000);
+    /*if(direction == 4){
         buffer->append((char) 0b00000000);     //recule
     }else if(direction==1){
         buffer->append((char) 0b01010000);     //avance
@@ -90,7 +104,11 @@ void Controler::move(int vitesseG, int vitesseD, int direction){
         buffer->append((char) 0b01000000);     //droite
     }else if(direction == 3){
         buffer->append((char) 0b00010000);     //gauche
-    }
+    }*/
+
+
+
+    //qDebug() << buffer[1];
 
     unsigned short crc = Crc16((unsigned char* )this->buffer->constData(), this->buffer->length());
         // Char 8-9 is the CRC 16 bits (char 8 low char 9 high)
@@ -100,14 +118,16 @@ void Controler::move(int vitesseG, int vitesseD, int direction){
     buffer->append((char)crc);          //8 premiers bits (le crc est sur 2 octets)
     buffer->append((char)(crc>>8));       //ajout des 8 derniers bits*/
 
-    /*@ char octet;
-    for(int i=0; i<=7; i++){
+
+    /*char octet;
+    for(int i=0; i<=8; i++){
         octet = buffer->at(i);
-        for(int j=7; j>=0; j--){
+        for(int j=8; j>=0; j--){
             qDebug() << ((octet >> j)&1);
         }
         qDebug() << "\n";
     }*/
+    socket->write(*buffer);
 }
 
 short Controler::Crc16(unsigned char *Adresse_tab , unsigned char Taille_max) {

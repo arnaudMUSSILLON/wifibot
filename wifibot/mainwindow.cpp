@@ -54,17 +54,21 @@ void MainWindow::on_disconnectBtn_clicked()
 
 
 void MainWindow::updateMove(){
-    int vitesse = 100;
+    int vitesse = 240;
     if(isPressedZ && !isPressedQ && !isPressedS && !isPressedD){
         c->move(vitesse, vitesse, 1);
         qDebug() << "z";
     }
     else{
-        c->move(0,0,1);
+        c->move(vitesse, vitesse, 3);
     }
 }
 
 
+/**
+ * @brief ::MainWindow::keyPressEvent event when a key is pressed
+ * @param event
+ */
 void::MainWindow::keyPressEvent(QKeyEvent *event){
     switch(event->key()){
     case Qt::Key_Z:
@@ -75,43 +79,60 @@ void::MainWindow::keyPressEvent(QKeyEvent *event){
 
     case Qt::Key_S:
         ui->sBtn->animateClick();
-        ui->sBtn->click();
         break;
 
     case Qt::Key_D:
         ui->dBtn->animateClick();
-        ui->dBtn->click();
         break;
 
     case Qt::Key_Q:
         ui->qBtn->animateClick();
-        ui->qBtn->click();
         break;
 
     case Qt::Key_Up:
         ui->upArrowBtn->animateClick();
-        ui->upArrowBtn->click();
         break;
 
     case Qt::Key_Down:
         ui->downArrowBtn->animateClick();
-        ui->downArrowBtn->click();
         ui->qBtn->click();
         break;
 
     case Qt::Key_Left:
         ui->leftArrowBtn->animateClick();
-        ui->leftArrowBtn->click();
         ui->qBtn->click();
         break;
 
     case Qt::Key_Right:
         ui->rightArrowBtn->animateClick();
-        ui->rightArrowBtn->click();
         break;
     }
     updateMove();
 }
+
+
+/**
+ * @brief Event when a key is released
+ * @param event
+ */
+void MainWindow::keyReleaseEvent(QKeyEvent *event){
+    switch(event->key()){
+    case Qt::Key_Z:
+        isPressedZ = false;
+        break;
+    case Qt::Key_Q:
+        isPressedD = false;
+        break;
+    case Qt::Key_S:
+        isPressedS = false;
+        break;
+    case Qt::Key_D:
+        isPressedD = false;
+        break;
+    }
+    updateMove();
+}
+
 
 void MainWindow::on_upArrowBtn_pressed()
 {
