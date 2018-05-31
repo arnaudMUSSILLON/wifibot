@@ -251,19 +251,14 @@
      </property>
     </widget>
    </widget>
-   <widget class="QWebView" name="videoFrame" native="true">
+   <widget class="QWebEngineView" name="videoFrame" native="true">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>20</x>
       <y>10</y>
-      <width>501</width>
+      <width>551</width>
       <height>351</height>
      </rect>
-    </property>
-    <property name="url" stdset="0">
-     <url>
-      <string>about:blank</string>
-     </url>
     </property>
    </widget>
   </widget>
@@ -271,9 +266,10 @@
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
-   <class>QWebView</class>
+   <class>QWebEngineView</class>
    <extends>QWidget</extends>
-   <header>QtWebKit/QWebView</header>
+   <header>qwebengineview.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>
