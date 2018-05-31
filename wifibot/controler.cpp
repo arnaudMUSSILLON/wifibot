@@ -6,6 +6,9 @@ Controler::Controler(QObject *parent) : QObject(parent)
     timer = new QTimer(this);
     timer->setInterval(50);
     connect(timer, SIGNAL(timeout()),this,SLOT(sendData()));
+    t2 = new QTimer(this);
+    t2->setInterval(55);
+    connect(t2, SIGNAL(timeout()),this,SLOT(getBatterie()));
 }
 
 /**
@@ -22,11 +25,10 @@ bool Controler::askConnection(QString address, int port){
     socket = new QTcpSocket(this);
     connect(socket, SIGNAL(connected()),this, SLOT(read()));    //Creates a connection of the given type from the signal in the sender object
     connect(socket, SIGNAL(bytesWritten(qint64)),this, SLOT(whenBytesWritten(qint64)));
-    //connect(socket, SIGNAL(disconnected()),this, SLOT(write()));
-    //QHostAddress a = QHostAddress(address);   //transform the string into IPV4 address
     socket->connectToHost(address, port);     //connexion to remote host
     if(socket->waitForConnected(5000)){     //waiting 1 second for a response
         timer->start();
+        t2->start();
         res = true;
     }
     else{
@@ -58,7 +60,6 @@ void Controler::disconnect(){
  */
 void Controler::read(){
     qDebug() << "Lecture des données en cours";
-    //QDataStream Capteur(this->socket);
 }
 
 /**
@@ -132,4 +133,8 @@ short Controler::Crc16(unsigned char *Adresse_tab , unsigned char Taille_max) {
 void Controler::whenBytesWritten(qint64 bytes)
 {
     qDebug() << bytes << " bytes written...";
+}
+
+QString Controler::getBatterie(){
+   return "10";
 }

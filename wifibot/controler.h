@@ -34,12 +34,14 @@ public slots:
     void read();
     void sendData();
     void whenBytesWritten(qint64 bytes);
+    QString getBatterie();
 
 private:
     QTcpSocket *socket;
     QByteArray* buffer;
     Capteur capteur;
     QTimer* timer;
+    QTimer* t2;
 };
 
 #endif // CONTROLER_H

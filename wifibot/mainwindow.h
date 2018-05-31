@@ -10,6 +10,9 @@
 #include <QMessageBox>
 #include <QKeyEvent>
 #include <QWebEngineView>
+#include <QWebEngineDownloadItem>
+#include <QtGamePad>
+#include <QFileDialog>
 #include "controler.h"
 
 namespace Ui {
@@ -26,6 +29,8 @@ public:
     void keyPressEvent(QKeyEvent *event);
     void updateMove();
     QNetworkAccessManager *cameraControler;
+    QWebEnginePage page;
+    QWebEngineDownloadItem::SavePageFormat format;
 
 private slots:
     void on_connectBtn_clicked();
@@ -42,6 +47,8 @@ private slots:
     void screenshot();
 
     void on_captureBtn_clicked();
+
+    void setLbValue(int);
 
 private:
     Ui::MainWindow *ui;

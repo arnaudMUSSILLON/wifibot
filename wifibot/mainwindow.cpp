@@ -13,12 +13,21 @@ MainWindow::MainWindow(QWidget *parent) :
     this->ui->leftArrowBtn->setArrowType(Qt::LeftArrow);
     this->c= new Controler();
     this->cameraControler = new QNetworkAccessManager();
+
+    connect(this->ui->speedSlider,SIGNAL(valueChanged(int)),SLOT(setLbValue(int)));
+    QString t = c->getBatterie();
+    this->ui->label->text() = t;
+
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
 }
+
+/* ***********************************
+    Gestion des boutons
+*************************************/
 
 /**
  * @brief MainWindow::on_connectBtn_clicked
@@ -35,6 +44,7 @@ void MainWindow::on_connectBtn_clicked()
         int port = this->ui->tfPort->text().toInt();
         c->askConnection(ip,port);
         QString source = "http://"+ui->tfAddress->text()+":8080/javascript_simple.html";
+        ui->videoFrame->setVisible(true);
         ui->videoFrame->load(QUrl(source));
         ui->videoFrame->setZoomFactor(1.4);
         ui->videoFrame->setStyleSheet("background-color:#ffffff;");
@@ -50,21 +60,64 @@ void MainWindow::on_disconnectBtn_clicked()
 {
     c->disconnect();
     ui->videoFrame->stop();
+    ui->videoFrame->setVisible(false);
 }
 
-
-void MainWindow::updateMove(){
-    int vitesse = 100;
-    if(isPressedZ && !isPressedQ && !isPressedS && !isPressedD){
-        c->move(vitesse, vitesse, 1);
-        qDebug() << "z";
-    }
-    else{
-        c->move(0,0,1);
-    }
+/**
+ * @brief MainWindow::on_captureBtn_clicked
+ * Gestion du bouton de capture d'écran
+ */
+void MainWindow::on_captureBtn_clicked()
+{
+    screenshot();
 }
 
+/**
+ * @brief MainWindow::on_upArrowBtn_pressed
+ * Gestion du contrôle de la caméra lors de l'appui sur la flèche haut
+ */
+void MainWindow::on_upArrowBtn_pressed()
+{
+    QUrl url("http://"+ui->tfAddress->text()+":8080"+CAM_UP);
+    cameraControler->get(QNetworkRequest(url));
 
+}
+
+/**
+ * @brief MainWindow::on_upArrowBtn_pressed
+ * Gestion du contrôle de la caméra lors de l'appui sur la flèche bas
+ */
+void MainWindow::on_downArrowBtn_pressed()
+{
+    QUrl url("http://"+ui->tfAddress->text()+":8080"+CAM_DOWN);
+    cameraControler->get(QNetworkRequest(url));
+}
+
+/**
+ * @brief MainWindow::on_upArrowBtn_pressed
+ * Gestion du contrôle de la caméra lors de l'appui sur la flèche gauche
+ */
+void MainWindow::on_leftArrowBtn_pressed()
+{
+    QUrl url("http://"+ui->tfAddress->text()+":8080"+CAM_LEFT);
+    cameraControler->get(QNetworkRequest(url));
+}
+
+/**
+ * @brief MainWindow::on_upArrowBtn_pressed
+ * Gestion du contrôle de la caméra lors de l'appui sur la flèche droite
+ */
+void MainWindow::on_rightArrowBtn_pressed()
+{
+    QUrl url("http://"+ui->tfAddress->text()+":8080"+CAM_RIGHT);
+    cameraControler->get(QNetworkRequest(url));
+}
+
+/**
+ * @brief ::MainWindow::keyPressEvent
+ * @param event
+ * assignation des boutons aux touches
+ */
 void::MainWindow::keyPressEvent(QKeyEvent *event){
     switch(event->key()){
     case Qt::Key_Z:
@@ -113,48 +166,62 @@ void::MainWindow::keyPressEvent(QKeyEvent *event){
     updateMove();
 }
 
-void MainWindow::on_upArrowBtn_pressed()
-{
-    QUrl url("http://"+ui->tfAddress->text()+":8080"+CAM_UP);
-    cameraControler->get(QNetworkRequest(url));
+/* ***********************************
+    Gestion du mouvement
+*************************************/
 
+/**
+ * @brief MainWindow::updateMove
+ * Gestion du mouvement du robot
+ */
+void MainWindow::updateMove(){
+    int vitesse = 100;
+    if(isPressedZ && !isPressedQ && !isPressedS && !isPressedD){
+        c->move(vitesse, vitesse, 1);
+        qDebug() << "z";
+    }
+    else{
+        c->move(0,0,1);
+    }
 }
 
-void MainWindow::on_downArrowBtn_pressed()
-{
-    QUrl url("http://"+ui->tfAddress->text()+":8080"+CAM_DOWN);
-    cameraControler->get(QNetworkRequest(url));
+/* ***********************************
+ Gestion des composants de la fenêtre
+*************************************/
+
+/**
+ * @brief MainWindow::setLbValue
+ * @param v
+ * affichage de la vitesse en fonction du curseur
+ */
+void MainWindow::setLbValue(int v){
+    this->ui->lbSpeed->setText(QString::number(v));
 }
 
-void MainWindow::on_leftArrowBtn_pressed()
-{
-    QUrl url("http://"+ui->tfAddress->text()+":8080"+CAM_LEFT);
-    cameraControler->get(QNetworkRequest(url));
-}
 
-void MainWindow::on_rightArrowBtn_pressed()
-{
-    QUrl url("http://"+ui->tfAddress->text()+":8080"+CAM_RIGHT);
-    cameraControler->get(QNetworkRequest(url));
-}
+/* ***********************************
+            Autres
+*************************************/
 
+/**
+ * @brief MainWindow::screenshot
+ * capture d'écran du flux de la caméra
+ */
 void MainWindow::screenshot(){
 
-    int left, top, width, height;
-    left = 0;
-    top = 0;
-    width = 600;
-    height = 800;
+    QPixmap capture = QPixmap();
+    capture = QPixmap::grabWidget(this->ui->videoFrame);
 
-    QImage image(height, width, QImage::Format_RGB32);
-    QRegion rg(left, top, width, height);
-    QPainter painter(&image);
-    ui->videoFrame->page()->view()->render(&painter, QPoint(), rg);
-    painter.end();
-    image.save("~/Desktop/test.png", "PNG", 80);
-}
+    QString format = "png";
+    QString path = QDir::currentPath() + tr("/capture.")+format;
 
-void MainWindow::on_captureBtn_clicked()
-{
-    screenshot();
+
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Save as"),
+                                                    path,
+                                                    tr("%1 Files (*.%2);;All Files(*)")
+                                                    .arg(format.toUpper())
+                                                    .arg(format));
+    if(!fileName.isEmpty()){
+        capture.save(fileName,format.toUtf8());
+    }
 }
