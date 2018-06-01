@@ -114,13 +114,8 @@ void MainWindow::on_rightArrowBtn_pressed()
 }
 
 /**
- * @brief ::MainWindow::keyPressEvent
- * @param event
- * assignation des boutons aux touches
-=======
  * @brief ::MainWindow::keyPressEvent event when a key is pressed
  * @param event
->>>>>>> 9b08c53ff0edcea932a820caad6454d4415fa5b3
  */
 void::MainWindow::keyPressEvent(QKeyEvent *event){
     switch(event->key()){
