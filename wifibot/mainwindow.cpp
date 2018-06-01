@@ -114,8 +114,14 @@ void MainWindow::on_rightArrowBtn_pressed()
 }
 
 /**
+<<<<<<< HEAD
  * @brief ::MainWindow::keyPressEvent event when a key is pressed
  * @param event
+=======
+ * @brief ::MainWindow::keyPressEvent
+ * @param event
+ * assignement des boutons aux touches
+>>>>>>> 84303c36f2aa7dfeca48dca6962e28154fd44de4
  */
 void::MainWindow::keyPressEvent(QKeyEvent *event){
     switch(event->key()){
@@ -189,10 +195,15 @@ void MainWindow::updateMove(){
     int vitesse = 100;
     if(isPressedZ && !isPressedQ && !isPressedS && !isPressedD){
         c->move(vitesse, vitesse, 1);
-        qDebug() << "z";
+    } else if(!isPressedZ && isPressedQ && !isPressedS && !isPressedD){
+        c->move(vitesse, vitesse, 3);
+    }else if(!isPressedZ && !isPressedQ && isPressedS && !isPressedD){
+        c->move(vitesse, vitesse, 4);
+    } else if(!isPressedZ && !isPressedQ && !isPressedS && isPressedD){
+        c->move(vitesse, vitesse, 2);
     }
     else{
-        c->move(0,0,1);
+        c->move(0,0,5);
     }
 }
 
