@@ -33,8 +33,8 @@ public slots:
     void whenConnected();
     void receiveData();
     void sendData();
-    QString getBatterie();
     void whenBytesWritten(qint64 bytes);
+    qint8 getBatterie();
 
 private:
     QTcpSocket *socket;

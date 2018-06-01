@@ -31,6 +31,7 @@ public:
     QNetworkAccessManager *cameraControler;
     QWebEnginePage page;
     QWebEngineDownloadItem::SavePageFormat format;
+    static MainWindow* mainWindowPtr();
 
 private slots:
     void on_connectBtn_clicked();
@@ -41,7 +42,7 @@ private slots:
     void on_rightArrowBtn_pressed();
     void screenshot();
     void on_captureBtn_clicked();
-
+    void updateBValue();
     void setLbValue(int);
 
 private:
@@ -51,6 +52,7 @@ private:
     bool isPressedQ = false;
     bool isPressedS = false;
     bool isPressedD = false;
+    static MainWindow* mainW;
 
 };
 

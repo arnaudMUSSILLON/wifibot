@@ -1,23 +1,24 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+MainWindow * MainWindow::mainW = nullptr;
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    mainW = this;
     QMainWindow::setFocus();
     this->ui->upArrowBtn->setArrowType(Qt::UpArrow);
     this->ui->downArrowBtn->setArrowType(Qt::DownArrow);
     this->ui->rightArrowBtn->setArrowType(Qt::RightArrow);
     this->ui->leftArrowBtn->setArrowType(Qt::LeftArrow);
+    this->ui->capteursFrame->setVisible(false);
     this->c= new Controler();
     this->cameraControler = new QNetworkAccessManager();
-
+    this->updateBValue();
     connect(this->ui->speedSlider,SIGNAL(valueChanged(int)),SLOT(setLbValue(int)));
-    QString t = c->getBatterie();
-    this->ui->label->text() = t;
-
 }
 
 MainWindow::~MainWindow()
@@ -42,13 +43,17 @@ void MainWindow::on_connectBtn_clicked()
         //appel de la méthode connect
         QString ip = this->ui->tfAddress->text();
         int port = this->ui->tfPort->text().toInt();
-        c->askConnection(ip,port);
-        QString source = "http://"+ui->tfAddress->text()+":8080/javascript_simple.html";
-        ui->videoFrame->setVisible(true);
-        ui->videoFrame->load(QUrl(source));
-        ui->videoFrame->setZoomFactor(1.4);
-        ui->videoFrame->setStyleSheet("background-color:#ffffff;");
-        ui->videoFrame->show();
+        if(c->askConnection(ip,port)){
+
+            this->ui->capteursFrame->setVisible(true);
+
+            QString source = "http://"+ui->tfAddress->text()+":8080/javascript_simple.html";
+            this->ui->videoFrame->setVisible(true);
+            this->ui->videoFrame->load(QUrl(source));
+            this->ui->videoFrame->setZoomFactor(1.4);
+            this->ui->videoFrame->setStyleSheet("background-color:#ffffff;");
+            this->ui->videoFrame->show();
+        }
     }
 }
 
@@ -59,8 +64,9 @@ void MainWindow::on_connectBtn_clicked()
 void MainWindow::on_disconnectBtn_clicked()
 {
     c->disconnect();
-    ui->videoFrame->stop();
-    ui->videoFrame->setVisible(false);
+    this->ui->videoFrame->stop();
+    this->ui->videoFrame->setVisible(false);
+    this->ui->capteursFrame->setVisible(false);
 }
 
 /**
@@ -190,7 +196,7 @@ void MainWindow::keyReleaseEvent(QKeyEvent *event){
  * Gestion du mouvement du robot
  */
 void MainWindow::updateMove(){
-    int vitesse = 50;
+    int vitesse = this->ui->speedSlider->value();
     if(isPressedZ && !isPressedQ && !isPressedS && !isPressedD){
         c->move(vitesse, vitesse, 1);
     }else if(!isPressedZ && isPressedQ && !isPressedS && !isPressedD){
@@ -203,6 +209,11 @@ void MainWindow::updateMove(){
     else{
         c->move(0,0,5);
     }
+}
+
+MainWindow *MainWindow::mainWindowPtr()
+{
+    return mainW;
 }
 
 /* **************************************************************
@@ -243,5 +254,15 @@ void MainWindow::screenshot(){
                                                     .arg(format));
     if(!fileName.isEmpty()){
         capture.save(fileName,format.toUtf8());
+    }
+}
+
+void MainWindow::updateBValue(){
+
+    if(this->c->getBatterie()>100){
+        this->ui->pbBatterie->setValue(100);
+    }
+    else{
+        this->ui->pbBatterie->setValue(this->c->getBatterie());
     }
 }

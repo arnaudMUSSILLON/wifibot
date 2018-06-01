@@ -166,6 +166,6 @@ void Controler::move(int vitesseG, int vitesseD, int direction){
     }*/
 }
 
-QString Controler::getBatterie(){
-   return "10";
+qint8 Controler::getBatterie(){
+    return this->capteur.batterie;
 }

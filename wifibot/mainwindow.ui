@@ -29,19 +29,6 @@
     <property name="frameShadow">
      <enum>QFrame::Raised</enum>
     </property>
-    <widget class="QPushButton" name="captureBtn">
-     <property name="geometry">
-      <rect>
-       <x>670</x>
-       <y>10</y>
-       <width>141</width>
-       <height>41</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Capture d'écran</string>
-     </property>
-    </widget>
     <widget class="QLineEdit" name="tfPort">
      <property name="geometry">
       <rect>
@@ -305,19 +292,6 @@ QSlider::handle:vertical {
       <string>0</string>
      </property>
     </widget>
-    <widget class="QLabel" name="label">
-     <property name="geometry">
-      <rect>
-       <x>730</x>
-       <y>120</y>
-       <width>60</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-    </widget>
    </widget>
    <widget class="QWebEngineView" name="videoFrame" native="true">
     <property name="geometry">
@@ -417,7 +391,7 @@ QSlider::handle:vertical {
       <enum>QFrame::Plain</enum>
      </property>
     </widget>
-    <widget class="QLabel" name="label_4">
+    <widget class="QLabel" name="lbPos">
      <property name="geometry">
       <rect>
        <x>70</x>
@@ -430,45 +404,30 @@ QSlider::handle:vertical {
       <string>POSITION DES CAPTEURS</string>
      </property>
     </widget>
-    <widget class="QTextBrowser" name="capteur_img">
+    <widget class="QProgressBar" name="pbBatterie">
      <property name="geometry">
       <rect>
-       <x>110</x>
-       <y>30</y>
-       <width>100</width>
-       <height>80</height>
+       <x>20</x>
+       <y>140</y>
+       <width>118</width>
+       <height>23</height>
       </rect>
      </property>
-     <property name="minimumSize">
-      <size>
-       <width>80</width>
-       <height>80</height>
-      </size>
+     <property name="value">
+      <number>24</number>
      </property>
-     <property name="maximumSize">
-      <size>
-       <width>100</width>
-       <height>80</height>
-      </size>
+    </widget>
+    <widget class="QPushButton" name="captureBtn">
+     <property name="geometry">
+      <rect>
+       <x>160</x>
+       <y>130</y>
+       <width>141</width>
+       <height>41</height>
+      </rect>
      </property>
-     <property name="cursor" stdset="0">
-      <cursorShape>BlankCursor</cursorShape>
-     </property>
-     <property name="verticalScrollBarPolicy">
-      <enum>Qt::ScrollBarAlwaysOff</enum>
-     </property>
-     <property name="horizontalScrollBarPolicy">
-      <enum>Qt::ScrollBarAlwaysOff</enum>
-     </property>
-     <property name="html">
-      <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'.SF NS Text'; font-size:13pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-     <property name="textInteractionFlags">
-      <set>Qt::NoTextInteraction</set>
+     <property name="text">
+      <string>Capture d'écran</string>
      </property>
     </widget>
    </widget>
