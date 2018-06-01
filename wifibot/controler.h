@@ -41,11 +41,8 @@ private:
     QByteArray* buffer;
     Capteur capteur;
     QTimer* timer;
-<<<<<<< HEAD
-    QTimer* t2;
-=======
     QTimer* timer2;
->>>>>>> 9b08c53ff0edcea932a820caad6454d4415fa5b3
+
 };
 
 #endif // CONTROLER_H

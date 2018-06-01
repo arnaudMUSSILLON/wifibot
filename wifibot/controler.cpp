@@ -8,17 +8,11 @@ Controler::Controler(QObject *parent) : QObject(parent)
     timer = new QTimer(this);
     timer->setInterval(20);
     connect(timer, SIGNAL(timeout()),this,SLOT(sendData()));
-<<<<<<< HEAD
-    t2 = new QTimer(this);
-    t2->setInterval(55);
-    connect(t2, SIGNAL(timeout()),this,SLOT(getBatterie()));
-=======
 
     //Timer pour la lecture des informations
     timer2 = new QTimer(this);
     timer2->setInterval(250);
     connect(timer2, SIGNAL(timeout()),this, SLOT(receiveData()));
->>>>>>> 9b08c53ff0edcea932a820caad6454d4415fa5b3
 }
 
 /**
@@ -35,26 +29,25 @@ bool Controler::askConnection(QString address, int port){
     socket = new QTcpSocket(this);
     connect(socket, SIGNAL(connected()),this, SLOT(whenConnected()));    //Creates a connection of the given type from the signal in the sender object
     connect(socket, SIGNAL(bytesWritten(qint64)),this, SLOT(whenBytesWritten(qint64)));
-<<<<<<< HEAD
     socket->connectToHost(address, port);     //connexion to remote host
     if(socket->waitForConnected(5000)){     //waiting 1 second for a response
         timer->start();
-        t2->start();
-=======
     //QHostAddress a = QHostAddress(address);   //transform the string into IPV4 address
     socket->connectToHost(address, port);     //connexion to remote host
-    if(socket->waitForConnected(5000)){     //waiting 1 second for a response
+    if(socket->waitForConnected(5000))
+    {     //waiting 1 second for a response
         timer->start();
         timer2->start();
->>>>>>> 9b08c53ff0edcea932a820caad6454d4415fa5b3
         res = true;
     }
-    else{
+    else
+    {
         qDebug("Erreur : la connexion a échoué");
     }
-    return res;
-}
+        return res;
+    }
 
+}
 
 void Controler::sendData(){
     this->socket->write(*this->buffer);
@@ -83,12 +76,9 @@ void Controler::whenConnected(){
  */
 void Controler::receiveData(){
     qDebug() << "Lecture des données en cours";
-<<<<<<< HEAD
-=======
     QByteArray data = socket->readAll();
     capteur.batterie = data[2]*100/122;
     qDebug() << "Batterie" << capteur.batterie;
->>>>>>> 9b08c53ff0edcea932a820caad6454d4415fa5b3
 }
 
 /**
