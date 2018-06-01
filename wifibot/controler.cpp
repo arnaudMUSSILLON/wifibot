@@ -87,7 +87,14 @@ void Controler::receiveData(){
     qDebug() << "Lecture des données en cours";
     QByteArray data = socket->readAll();
     capteur.batterie = data[2]*100/122;
+    capteur.c1 = data[3];
+    capteur.c2 = data[11];
+    capteur.c3 = data[12];
+    capteur.c4 = data[4];
+
     qDebug() << "Batterie" << capteur.batterie;
+    qDebug() << "Capteur avant gauche" << capteur.c1;
+    qDebug() << "Capteur avant droit" << capteur.c2;
 }
 
 short Controler::Crc16(unsigned char *Adresse_tab , unsigned char Taille_max)

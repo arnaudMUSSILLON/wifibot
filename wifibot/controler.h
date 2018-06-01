@@ -23,10 +23,10 @@ public:
         quint16 vitesseD;     //speed right wheels
         quint8 batterie;
         quint8 courant;
-        quint8 c1;
-        quint8 c2;
-        quint8 c3;
-        quint8 c4;
+        quint8 c1;      //capteur avant gauche
+        quint8 c2;      //capteur avant droit
+        quint8 c3;      //capteur arriere gauche
+        quint8 c4;      //capteur arriere droit
     };
 
 public slots:

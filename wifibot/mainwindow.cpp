@@ -114,14 +114,9 @@ void MainWindow::on_rightArrowBtn_pressed()
 }
 
 /**
-<<<<<<< HEAD
- * @brief ::MainWindow::keyPressEvent event when a key is pressed
- * @param event
-=======
  * @brief ::MainWindow::keyPressEvent
  * @param event
  * assignement des boutons aux touches
->>>>>>> 84303c36f2aa7dfeca48dca6962e28154fd44de4
  */
 void::MainWindow::keyPressEvent(QKeyEvent *event){
     switch(event->key()){
@@ -132,13 +127,16 @@ void::MainWindow::keyPressEvent(QKeyEvent *event){
 
     case Qt::Key_S:
         ui->sBtn->animateClick();
+        isPressedS = true;
         break;
 
     case Qt::Key_D:
         ui->dBtn->animateClick();
+        isPressedD= true;
         break;
 
     case Qt::Key_Q:
+        isPressedQ = true;
         ui->qBtn->animateClick();
         break;
 
@@ -175,7 +173,7 @@ void MainWindow::keyReleaseEvent(QKeyEvent *event){
         isPressedZ = false;
         break;
     case Qt::Key_Q:
-        isPressedD = false;
+        isPressedQ = false;
         break;
     case Qt::Key_S:
         isPressedS = false;
@@ -192,14 +190,14 @@ void MainWindow::keyReleaseEvent(QKeyEvent *event){
  * Gestion du mouvement du robot
  */
 void MainWindow::updateMove(){
-    int vitesse = 100;
+    int vitesse = 50;
     if(isPressedZ && !isPressedQ && !isPressedS && !isPressedD){
         c->move(vitesse, vitesse, 1);
-    } else if(!isPressedZ && isPressedQ && !isPressedS && !isPressedD){
+    }else if(!isPressedZ && isPressedQ && !isPressedS && !isPressedD){
         c->move(vitesse, vitesse, 3);
     }else if(!isPressedZ && !isPressedQ && isPressedS && !isPressedD){
         c->move(vitesse, vitesse, 4);
-    } else if(!isPressedZ && !isPressedQ && !isPressedS && isPressedD){
+    }else if(!isPressedZ && !isPressedQ && !isPressedS && isPressedD){
         c->move(vitesse, vitesse, 2);
     }
     else{
