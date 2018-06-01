@@ -6,7 +6,7 @@ Controler::Controler(QObject *parent) : QObject(parent)
 
     //Envoie régulier du buffer pour la gestion du robot
     timer = new QTimer(this);
-    timer->setInterval(20);
+    timer->setInterval(25);
     connect(timer, SIGNAL(timeout()),this,SLOT(sendData()));
 
     //Timer pour la lecture des informations
@@ -24,7 +24,7 @@ Controler::Controler(QObject *parent) : QObject(parent)
  */
 bool Controler::askConnection(QString address, int port){
     bool res = false;
-
+    qDebug() << "Tentative de connexion ...";
     //Create new socket
     socket = new QTcpSocket(this);
     connect(socket, SIGNAL(connected()),this, SLOT(whenConnected()));    //Creates a connection of the given type from the signal in the sender object
@@ -32,21 +32,15 @@ bool Controler::askConnection(QString address, int port){
     socket->connectToHost(address, port);     //connexion to remote host
     if(socket->waitForConnected(5000)){     //waiting 1 second for a response
         timer->start();
-    //QHostAddress a = QHostAddress(address);   //transform the string into IPV4 address
-    socket->connectToHost(address, port);     //connexion to remote host
-    if(socket->waitForConnected(5000))
-    {     //waiting 1 second for a response
-        timer->start();
         timer2->start();
+        move(0,0,5);
+        socket->write(*this->buffer);
         res = true;
     }
-    else
-    {
+    else{
         qDebug("Erreur : la connexion a échoué");
     }
-        return res;
-    }
-
+    return res;
 }
 
 void Controler::sendData(){
@@ -87,22 +81,15 @@ void Controler::receiveData(){
  * @param vitesseD
  */
 void Controler::move(int vitesseG, int vitesseD, int direction){
-    //vitesse doit être entre 0 et 240
-    /*buffer->clear();
-    buffer->append((char)255);
-    buffer->append((char)0x07);
-    buffer->append((char)vitesseG);
-    buffer->append((char)0x00);
-    buffer->append((char)vitesseD);*/
+    //La vitesse doit être entre 0 et 240
     this->buffer->clear();
-    this->buffer->append(255);        // Char1 (255)
+    this->buffer->append((char)255);        // Char1 (255)
     this->buffer->append(0x07);       // Char2 (0x07)
-    this->buffer->append(240);  // Char3 leftspeed control
+    this->buffer->append((char)vitesseG);  // Char3 leftspeed control
     this->buffer->append(1);          // Char4 leftspeed control
-    this->buffer->append(240); // Char5 rightspeed control
+    this->buffer->append((char)vitesseD); // Char5 rightspeed control
     this->buffer->append(1);          // Char6 rightspeed control
-    this->buffer->append(0b01010000);
-    /*if(direction == 4){
+    if(direction == 4){
         buffer->append((char) 0b00000000);     //recule
     }else if(direction==1){
         buffer->append((char) 0b01010000);     //avance
@@ -110,19 +97,12 @@ void Controler::move(int vitesseG, int vitesseD, int direction){
         buffer->append((char) 0b01000000);     //droite
     }else if(direction == 3){
         buffer->append((char) 0b00010000);     //gauche
-    }*/
+    }
 
-
-
-    //qDebug() << buffer[1];
-
-    unsigned short crc = Crc16((unsigned char* )this->buffer->constData(), this->buffer->length());
-        // Char 8-9 is the CRC 16 bits (char 8 low char 9 high)
-    this->buffer->append(crc);        // Char8 (00000000 <-|    00000000)
-    this->buffer->append((crc>>8));   // Char9 (00000000   | -> 00000000)
-    /*quint16 crc = Crc16((unsigned char*)buffer->constData(), buffer->length());  //calcul du crc
-    buffer->append((char)crc);          //8 premiers bits (le crc est sur 2 octets)
-    buffer->append((char)(crc>>8));       //ajout des 8 derniers bits*/
+    // Les octets 8 et 9 correspondent au crc
+    unsigned short crc = Crc16((unsigned char* )buffer->constData(), buffer->length());
+    this->buffer->append(crc);
+    this->buffer->append((crc>>8));
 
 
     /*char octet;
@@ -133,20 +113,21 @@ void Controler::move(int vitesseG, int vitesseD, int direction){
         }
         qDebug() << "\n";
     }*/
-    socket->write(*buffer);
 }
 
-short Controler::Crc16(unsigned char *Adresse_tab , unsigned char Taille_max) {
+short Controler::Crc16(unsigned char *Adresse_tab , unsigned char Taille_max)
+{
     unsigned int Crc = 0xFFFF;
     unsigned int Polynome = 0xA001;
     unsigned int CptOctet = 0;
     unsigned int CptBit = 0;
     unsigned int Parity= 0;
-    Crc = 0xFFFF;
-    Polynome = 0xA001;
-    for ( CptOctet= 0 ; CptOctet < Taille_max ; CptOctet++) {
+
+    for (CptOctet = 1; CptOctet < Taille_max ; CptOctet++)
+    {
         Crc ^= *( Adresse_tab + CptOctet);
-        for ( CptBit = 0; CptBit <= 7 ; CptBit++) {
+        for ( CptBit = 0; CptBit <= 7 ; CptBit++)
+        {
             Parity= Crc;
             Crc >>= 1;
             if (Parity%2 == true) Crc ^= Polynome;
@@ -155,9 +136,8 @@ short Controler::Crc16(unsigned char *Adresse_tab , unsigned char Taille_max) {
     return(Crc);
 }
 
-void Controler::whenBytesWritten(qint64 bytes)
-{
-    qDebug() << bytes << " bytes written...";
+void Controler::whenBytesWritten(qint64 bytes){
+    qDebug() << bytes << " octets écrits...";
 }
 
 QString Controler::getBatterie(){

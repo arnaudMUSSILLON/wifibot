@@ -11,7 +11,6 @@
 #include <QKeyEvent>
 #include <QWebEngineView>
 #include <QWebEngineDownloadItem>
-#include <QtGamePad>
 #include <QFileDialog>
 #include "controler.h"
 
