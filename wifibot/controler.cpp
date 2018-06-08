@@ -1,5 +1,5 @@
 #include "controler.h"
-
+#include "mainwindow.h"
 Controler::Controler(QObject *parent) : QObject(parent)
 {
     this->buffer = new QByteArray();
@@ -91,6 +91,8 @@ void Controler::receiveData(){
     capteur.c2 = data[11];
     capteur.c3 = data[12];
     capteur.c4 = data[4];
+    MainWindow* mw = MainWindow::mainWindowPtr();
+    mw->updateBValue(capteur.batterie);
 
     qDebug() << "Batterie" << capteur.batterie;
     qDebug() << "Capteur avant gauche" << capteur.c1;
