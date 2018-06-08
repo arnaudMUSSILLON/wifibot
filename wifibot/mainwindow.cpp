@@ -194,7 +194,7 @@ void MainWindow::keyReleaseEvent(QKeyEvent *event){
  * @brief MainWindow::updateMove
  * Gestion du mouvement du robot
  */
-void MainWindow::updateMove(){
+void MainWindow::updateMove(){ 
     int vitesse = this->ui->speedSlider->value();
     if(isPressedZ && !isPressedQ && !isPressedS && !isPressedD){
         c->move(vitesse, vitesse, 1);

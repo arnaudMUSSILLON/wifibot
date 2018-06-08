@@ -140,9 +140,9 @@ void Controler::move(int vitesseG, int vitesseD, int direction){
     this->buffer->append((char)255);        // Char1 (255)
     this->buffer->append(0x07);       // Char2 (0x07)
     this->buffer->append((char)vitesseG);  // Char3 leftspeed control
-    this->buffer->append(1);          // Char4 leftspeed control
+    this->buffer->append((char)0);          // Char4 leftspeed control
     this->buffer->append((char)vitesseD); // Char5 rightspeed control
-    this->buffer->append(1);          // Char6 rightspeed control
+    this->buffer->append((char)0);          // Char6 rightspeed control
     if(direction == 4){
         buffer->append((char) 0b00000000);     //recule
     }else if(direction==1){
