@@ -86,7 +86,7 @@ void Controler::sendData(){
 void Controler::receiveData(){
     qDebug() << "Lecture des données en cours";
     QByteArray data = socket->readAll();
-    capteur.batterie = data[2];//100/122;
+    capteur.batterie = data[2];
     capteur.c1 = data[3];
     capteur.c2 = data[11];
     capteur.c3 = data[12];
