@@ -87,12 +87,13 @@ void Controler::receiveData(){
     qDebug() << "Lecture des données en cours";
     QByteArray data = socket->readAll();
     capteur.batterie = data[2];
-    capteur.c1 = data[3];
-    capteur.c2 = data[11];
-    capteur.c3 = data[12];
-    capteur.c4 = data[4];
+    capteur.c1 = data[3]; //capteur avant gauche
+    capteur.c2 = data[11]; //capteur avant droit
+    capteur.c3 = data[12]; //capteur arrière gauche
+    capteur.c4 = data[4]; // capteur arrière droit
     MainWindow* mw = MainWindow::mainWindowPtr();
     mw->updateBValue(capteur.batterie);
+    mw->updateCValue(capteur.c1,capteur.c2,capteur.c3,capteur.c4);
 
     qDebug() << "Batterie" << capteur.batterie;
     qDebug() << "Capteur avant gauche" << capteur.c1;

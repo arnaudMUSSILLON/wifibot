@@ -228,6 +228,105 @@ void MainWindow::setLbValue(int v){
     this->ui->lbSpeed->setText(QString::number(v));
 }
 
+/****BATTERIE ******/
+
+/**
+ * @brief MainWindow::updateBValue
+ * @param batterie
+ * maj de la valeur de la batterie du robot
+ */
+void MainWindow::updateBValue(unsigned char batterie){
+    if(batterie>100){
+        this->ui->pbBatterie->setValue(100);
+    }
+    else{
+        this->ui->pbBatterie->setValue(batterie);
+    }
+}
+
+/******* CAPTEURS *******/
+
+/**
+ * @brief MainWindow::updateFLValue
+ * @param fL
+ * maj de la valeur du capteur avant gauche
+ */
+void MainWindow::updateFLValue(unsigned char fL){
+    if(fL>100){
+        this->ui->frontLeft->setStyleSheet("QProgressBar {border: 2px solid grey; border-radius: 5px;text-align:center;}QProgressBar::chunk {background-color: #ff6600;width: 20px;}");
+    }
+    else if(fL<100 && fL>50){
+        this->ui->frontLeft->setStyleSheet("QProgressBar {border: 2px solid grey; border-radius: 5px;text-align:center;}QProgressBar::chunk {background-color: #ff0000;width: 20px;}");
+    }
+    else{
+        this->ui->frontLeft->setStyleSheet("QProgressBar {border: 2px solid grey; border-radius: 5px;text-align:center;}QProgressBar::chunk {background-color: #00ff00;width: 20px;}");
+    }
+}
+
+/**
+ * @brief MainWindow::updateRLValue
+ * @param fR
+ * maj de la valeur du capteur aavant droit
+ */
+void MainWindow::updateFRValue(unsigned char fR){
+    if(fR>100){
+        this->ui->frontRight->setStyleSheet("QProgressBar {border: 2px solid grey; border-radius: 5px;text-align:center;}QProgressBar::chunk {background-color: #ff6600;width: 20px;}");
+    }
+    else if(fR<100 && fR>50){
+        this->ui->frontRight->setStyleSheet("QProgressBar {border: 2px solid grey; border-radius: 5px;text-align:center;}QProgressBar::chunk {background-color: #ff0000;width: 20px;}");
+    }
+    else{
+        this->ui->frontRight->setStyleSheet("QProgressBar {border: 2px solid grey; border-radius: 5px;text-align:center;}QProgressBar::chunk {background-color: #00ff00;width: 20px;}");
+    }
+}
+
+/**
+ * @brief MainWindow::updateBLValue
+ * @param bL
+ * maj de la valeur du capteur arrière gauche
+ */
+void MainWindow::updateBLValue(unsigned char bL){
+    if(bL>100){
+        this->ui->backLeft->setStyleSheet("QProgressBar {border: 2px solid grey; border-radius: 5px;text-align:center;}QProgressBar::chunk {background-color: #ff6600;width: 20px;}");
+    }
+    else if(bL<100 && bL>50){
+        this->ui->backLeft->setStyleSheet("QProgressBar {border: 2px solid grey; border-radius: 5px;text-align:center;}QProgressBar::chunk {background-color: #ff0000;width: 20px;}");
+    }
+    else{
+        this->ui->backLeft->setStyleSheet("QProgressBar {border: 2px solid grey; border-radius: 5px;text-align:center;}QProgressBar::chunk {background-color: #00ff00;width: 20px;}");
+    }
+}
+
+/**
+ * @brief MainWindow::updateBRValue
+ * @param bR
+ * maj de la valeur du capteur arrière droit
+ */
+void MainWindow::updateBRValue(unsigned char bR){
+    if(bR>100){
+        this->ui->backRight->setStyleSheet("QProgressBar {border: 2px solid grey; border-radius: 5px;text-align:center;}QProgressBar::chunk {background-color: #ff0000;width: 20px;}");
+    }
+    else if(bR<100 && bR>50){
+        this->ui->backRight->setStyleSheet("QProgressBar {border: 2px solid grey; border-radius: 5px;text-align:center;}QProgressBar::chunk {background-color: #ff6600;width: 20px;}");
+    }
+    else{
+        this->ui->backRight->setStyleSheet("QProgressBar {border: 2px solid grey; border-radius: 5px;text-align:center;}QProgressBar::chunk {background-color: #00ff00;width: 20px;}");
+    }
+}
+
+/**
+ * @brief MainWindow::updateCValue
+ */
+void MainWindow::updateCValue(unsigned char fL, unsigned char fR, unsigned char bL, unsigned char bR){
+    updateFLValue(fL);
+    this->ui->frontLeft->setValue(fL);
+    updateFRValue(fR);
+    this->ui->frontRight->setValue(fR);
+    updateBLValue(bL);
+    this->ui->backLeft->setValue(bL);
+    updateBRValue(bR);
+    this->ui->backRight->setValue(bR);
+}
 
 /* ***************************************************************
                             Autres
@@ -256,13 +355,3 @@ void MainWindow::screenshot(){
     }
 }
 
-void MainWindow::updateBValue(unsigned char batterie){
-
-    qDebug() << "La valeur de la batterie est de : " << batterie;
-    if(batterie>100){
-        this->ui->pbBatterie->setValue(100);
-    }
-    else{
-        this->ui->pbBatterie->setValue(batterie);
-    }
-}
