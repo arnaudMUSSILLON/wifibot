@@ -15,6 +15,7 @@ MainWindow::MainWindow(QWidget *parent) :
     this->ui->rightArrowBtn->setArrowType(Qt::RightArrow);
     this->ui->leftArrowBtn->setArrowType(Qt::LeftArrow);
     this->ui->capteursFrame->setVisible(false);
+    this->ui->videoFrame->setVisible(false);
     this->c= new Controler();
     this->cameraControler = new QNetworkAccessManager();
     connect(this->ui->speedSlider,SIGNAL(valueChanged(int)),SLOT(setLbValue(int)));
@@ -45,7 +46,7 @@ void MainWindow::on_connectBtn_clicked()
         if(c->askConnection(ip,port)){
 
             this->ui->capteursFrame->setVisible(true);
-
+            this->ui->videoFrame->setVisible(true);
             QString source = "http://"+ui->tfAddress->text()+":8080/javascript_simple.html";
             this->ui->videoFrame->setVisible(true);
             this->ui->videoFrame->load(QUrl(source));
