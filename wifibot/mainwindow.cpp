@@ -17,7 +17,6 @@ MainWindow::MainWindow(QWidget *parent) :
     this->ui->capteursFrame->setVisible(false);
     this->c= new Controler();
     this->cameraControler = new QNetworkAccessManager();
-    this->updateBValue();
     connect(this->ui->speedSlider,SIGNAL(valueChanged(int)),SLOT(setLbValue(int)));
 }
 
@@ -257,12 +256,13 @@ void MainWindow::screenshot(){
     }
 }
 
-void MainWindow::updateBValue(){
+void MainWindow::updateBValue(unsigned char batterie){
 
-    if(this->c->getBatterie()>100){
+    qDebug() << "La valeur de la batterie est de : " << batterie;
+    if(batterie>100){
         this->ui->pbBatterie->setValue(100);
     }
     else{
-        this->ui->pbBatterie->setValue(this->c->getBatterie());
+        this->ui->pbBatterie->setValue(batterie);
     }
 }

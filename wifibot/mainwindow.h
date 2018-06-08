@@ -32,6 +32,7 @@ public:
     QWebEnginePage page;
     QWebEngineDownloadItem::SavePageFormat format;
     static MainWindow* mainWindowPtr();
+    void updateBValue(unsigned char batterie);
 
 private slots:
     void on_connectBtn_clicked();
@@ -42,7 +43,6 @@ private slots:
     void on_rightArrowBtn_pressed();
     void screenshot();
     void on_captureBtn_clicked();
-    void updateBValue();
     void setLbValue(int);
 
 private:
