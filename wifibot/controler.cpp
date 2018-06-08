@@ -35,7 +35,7 @@ bool Controler::askConnection(QString address, int port){
 
     //binding events
     connect(socket, SIGNAL(connected()),this, SLOT(whenConnected()));
-    connect(socket, SIGNAL(bytesWritten(qint64)),this, SLOT(whenBytesWritten(qint64)));
+    //connect(socket, SIGNAL(bytesWritten(qint64)),this, SLOT(whenBytesWritten(qint64)));
 
     socket->connectToHost(address, port);     //connexion to remote host
     if(socket->waitForConnected(5000)){     //waiting 1 second for a response
@@ -86,7 +86,7 @@ void Controler::sendData(){
 void Controler::receiveData(){
     qDebug() << "Lecture des données en cours";
     QByteArray data = socket->readAll();
-    capteur.batterie = data[2]*100/122;
+    capteur.batterie = data[2];//100/122;
     capteur.c1 = data[3];
     capteur.c2 = data[11];
     capteur.c3 = data[12];
@@ -150,11 +150,12 @@ void Controler::move(int vitesseG, int vitesseD, int direction){
     }else if(direction == 3){
         buffer->append((char) 0b00010000);     //gauche
     }
-
-    // Les octets 8 et 9 correspondent au crc
-    unsigned short crc = Crc16((unsigned char* )buffer->constData(), buffer->length());
-    this->buffer->append(crc);
-    this->buffer->append((crc>>8));
+    if(direction==1 || direction==2 || direction==3 || direction==4){
+        // Les octets 8 et 9 correspondent au crc
+        unsigned short crc = Crc16((unsigned char* )buffer->constData(), buffer->length());
+        this->buffer->append(crc);
+        this->buffer->append((crc>>8));
+    }
 
     /*char octet;
     for(int i=0; i<=8; i++){
