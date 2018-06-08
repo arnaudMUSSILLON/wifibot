@@ -33,6 +33,11 @@ public:
     QWebEngineDownloadItem::SavePageFormat format;
     static MainWindow* mainWindowPtr();
     void updateBValue(unsigned char batterie);
+    void updateFLValue(unsigned char fL);
+    void updateFRValue(unsigned char fR);
+    void updateBLValue(unsigned char bL);
+    void updateBRValue(unsigned char bR);
+    void updateCValue(unsigned char fL, unsigned char fR, unsigned char bL, unsigned char bR);
 
 private slots:
     void on_connectBtn_clicked();

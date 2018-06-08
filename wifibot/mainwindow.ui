@@ -45,7 +45,7 @@
     <widget class="QToolButton" name="sBtn">
      <property name="geometry">
       <rect>
-       <x>260</x>
+       <x>290</x>
        <y>140</y>
        <width>51</width>
        <height>41</height>
@@ -58,7 +58,7 @@
     <widget class="QToolButton" name="rightArrowBtn">
      <property name="geometry">
       <rect>
-       <x>620</x>
+       <x>550</x>
        <y>100</y>
        <width>51</width>
        <height>41</height>
@@ -97,7 +97,7 @@
     <widget class="QLabel" name="lbWifibot">
      <property name="geometry">
       <rect>
-       <x>220</x>
+       <x>250</x>
        <y>30</y>
        <width>141</width>
        <height>16</height>
@@ -110,7 +110,7 @@
     <widget class="QToolButton" name="upArrowBtn">
      <property name="geometry">
       <rect>
-       <x>570</x>
+       <x>500</x>
        <y>60</y>
        <width>51</width>
        <height>41</height>
@@ -123,7 +123,7 @@
     <widget class="QToolButton" name="zBtn">
      <property name="geometry">
       <rect>
-       <x>260</x>
+       <x>290</x>
        <y>60</y>
        <width>51</width>
        <height>41</height>
@@ -149,7 +149,7 @@
     <widget class="QToolButton" name="qBtn">
      <property name="geometry">
       <rect>
-       <x>210</x>
+       <x>240</x>
        <y>100</y>
        <width>51</width>
        <height>41</height>
@@ -162,7 +162,7 @@
     <widget class="QToolButton" name="leftArrowBtn">
      <property name="geometry">
       <rect>
-       <x>520</x>
+       <x>450</x>
        <y>100</y>
        <width>51</width>
        <height>41</height>
@@ -175,7 +175,7 @@
     <widget class="QToolButton" name="downArrowBtn">
      <property name="geometry">
       <rect>
-       <x>570</x>
+       <x>500</x>
        <y>140</y>
        <width>51</width>
        <height>41</height>
@@ -188,7 +188,7 @@
     <widget class="QToolButton" name="dBtn">
      <property name="geometry">
       <rect>
-       <x>310</x>
+       <x>340</x>
        <y>100</y>
        <width>51</width>
        <height>41</height>
@@ -201,7 +201,7 @@
     <widget class="QLabel" name="lbWifibot_2">
      <property name="geometry">
       <rect>
-       <x>520</x>
+       <x>450</x>
        <y>30</y>
        <width>141</width>
        <height>16</height>
@@ -240,7 +240,7 @@
     <widget class="QSlider" name="speedSlider">
      <property name="geometry">
       <rect>
-       <x>420</x>
+       <x>680</x>
        <y>90</y>
        <width>41</width>
        <height>111</height>
@@ -259,7 +259,7 @@
     <widget class="QLabel" name="lbWifibot_3">
      <property name="geometry">
       <rect>
-       <x>390</x>
+       <x>650</x>
        <y>30</y>
        <width>111</width>
        <height>16</height>
@@ -272,7 +272,7 @@
     <widget class="QLabel" name="lbSpeed">
      <property name="geometry">
       <rect>
-       <x>430</x>
+       <x>690</x>
        <y>70</y>
        <width>41</width>
        <height>20</height>
@@ -303,9 +303,9 @@
     <property name="geometry">
      <rect>
       <x>510</x>
-      <y>170</y>
+      <y>140</y>
       <width>311</width>
-      <height>191</height>
+      <height>221</height>
      </rect>
     </property>
     <property name="frameShape">
@@ -314,73 +314,6 @@
     <property name="frameShadow">
      <enum>QFrame::Raised</enum>
     </property>
-    <widget class="QLCDNumber" name="backLeft">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>80</y>
-       <width>64</width>
-       <height>34</height>
-      </rect>
-     </property>
-     <property name="cursor">
-      <cursorShape>BlankCursor</cursorShape>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Plain</enum>
-     </property>
-     <property name="smallDecimalPoint">
-      <bool>false</bool>
-     </property>
-    </widget>
-    <widget class="QLCDNumber" name="backRight">
-     <property name="geometry">
-      <rect>
-       <x>230</x>
-       <y>80</y>
-       <width>64</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <property name="cursor">
-      <cursorShape>BlankCursor</cursorShape>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Plain</enum>
-     </property>
-    </widget>
-    <widget class="QLCDNumber" name="frontRight">
-     <property name="geometry">
-      <rect>
-       <x>230</x>
-       <y>30</y>
-       <width>64</width>
-       <height>34</height>
-      </rect>
-     </property>
-     <property name="cursor">
-      <cursorShape>BlankCursor</cursorShape>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Plain</enum>
-     </property>
-    </widget>
-    <widget class="QLCDNumber" name="frontLeft">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>30</y>
-       <width>64</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <property name="cursor">
-      <cursorShape>BlankCursor</cursorShape>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Plain</enum>
-     </property>
-    </widget>
     <widget class="QLabel" name="lbPos">
      <property name="geometry">
       <rect>
@@ -397,23 +330,186 @@
     <widget class="QProgressBar" name="pbBatterie">
      <property name="geometry">
       <rect>
-       <x>20</x>
-       <y>130</y>
-       <width>118</width>
-       <height>23</height>
+       <x>10</x>
+       <y>170</y>
+       <width>131</width>
+       <height>31</height>
       </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QProgressBar {
+    border: 2px solid grey;
+    border-radius: 5px;
+	text-align:center;
+}
+
+QProgressBar::chunk {
+    background-color: #00FF00;
+    width: 20px;
+
+}</string>
+     </property>
+     <property name="value">
+      <number>24</number>
+     </property>
+     <property name="format">
+      <string>%p%</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="lbBatterie">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>140</y>
+       <width>60</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Batterie : </string>
+     </property>
+    </widget>
+    <widget class="QProgressBar" name="frontLeft">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>30</y>
+       <width>111</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QProgressBar {
+    border: 2px solid grey;
+    border-radius: 5px;
+	text-align:center;
+}
+
+QProgressBar::chunk {
+    background-color: #00FF00;
+    width: 20px;
+
+}</string>
      </property>
      <property name="value">
       <number>24</number>
      </property>
     </widget>
+    <widget class="QProgressBar" name="backLeft">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>80</y>
+       <width>111</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QProgressBar {
+    border: 2px solid grey;
+    border-radius: 5px;
+	text-align:center;
+}
+
+QProgressBar::chunk {
+    background-color: #00FF00;
+    width: 20px;
+
+}</string>
+     </property>
+     <property name="value">
+      <number>24</number>
+     </property>
+    </widget>
+    <widget class="QProgressBar" name="frontRight">
+     <property name="geometry">
+      <rect>
+       <x>190</x>
+       <y>30</y>
+       <width>111</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QProgressBar {
+    border: 2px solid grey;
+    border-radius: 5px;
+	text-align:center;
+}
+
+QProgressBar::chunk {
+    background-color: #00FF00;
+    width: 20px;
+
+}</string>
+     </property>
+     <property name="value">
+      <number>24</number>
+     </property>
+    </widget>
+    <widget class="QProgressBar" name="backRight">
+     <property name="geometry">
+      <rect>
+       <x>190</x>
+       <y>80</y>
+       <width>111</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QProgressBar {
+    border: 2px solid grey;
+    border-radius: 5px;
+	text-align:center;
+}
+
+QProgressBar::chunk {
+    background-color: #00FF00;
+    width: 20px;
+
+}</string>
+     </property>
+     <property name="value">
+      <number>24</number>
+     </property>
+    </widget>
+    <widget class="QLabel" name="lbFront">
+     <property name="geometry">
+      <rect>
+       <x>130</x>
+       <y>40</y>
+       <width>60</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>AVANT</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="lbBack">
+     <property name="geometry">
+      <rect>
+       <x>130</x>
+       <y>90</y>
+       <width>60</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">text-align:center;
+</string>
+     </property>
+     <property name="text">
+      <string>ARRIERE</string>
+     </property>
+    </widget>
     <widget class="QPushButton" name="captureBtn">
      <property name="geometry">
       <rect>
-       <x>160</x>
-       <y>130</y>
-       <width>141</width>
-       <height>41</height>
+       <x>170</x>
+       <y>150</y>
+       <width>131</width>
+       <height>71</height>
       </rect>
      </property>
      <property name="text">
